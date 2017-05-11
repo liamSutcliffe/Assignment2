@@ -1,5 +1,7 @@
 package asgn2Customers;
 
+import java.util.ArrayList;
+
 import asgn2Exceptions.CustomerException;
 
 /** An abstract class to represent a customer at the Pizza Palace restaurant.
@@ -11,8 +13,8 @@ import asgn2Exceptions.CustomerException;
  * @author Person B
 */
 public abstract class Customer {
-
-
+	ArrayList<String> customer;
+	
 	/**
 	 *  This class represents a customer of the Pizza Palace restaurant.  A detailed description of the class's fields
 	 *  and parameters is provided in the Assignment Specification, in particular in Section 5.2. 
@@ -31,7 +33,60 @@ public abstract class Customer {
 	 * 
 	 */
 	public Customer(String name, String mobileNumber, int locationX, int locationY, String type) throws CustomerException{
-		// TO DO
+		this.customer = new ArrayList<String>();
+		
+		int nameMin = 1;
+		int nameMax = 20;
+		int numberLenght = 10;
+		char zero = '0';
+		int resturantLocation = 0;
+		int maxDeliveryDistance = 10;
+		String xLocation = Integer.toString(locationX);
+		String yLocation = Integer.toString(locationY);
+		
+		if ((name.length() >= nameMin) && (name.length() <= nameMax)){
+			
+			if (name.equals("                    ")){
+			
+				throw new CustomerException();
+			}
+			this.customer.add(name);
+		  
+		}else {
+			throw new CustomerException();
+		}
+		
+		if ((mobileNumber.charAt(0) == zero) && (mobileNumber.length() == numberLenght)){
+			this.customer.add(mobileNumber);
+			
+		}else{
+			throw new CustomerException();
+		}
+		
+		
+		
+		if (((type.equals("Driver Delivery")) || (type.equals("Drone Delivery"))) && 
+				((locationX > resturantLocation) && (locationX <= maxDeliveryDistance)) &&
+				((locationY > resturantLocation) && (locationY <= maxDeliveryDistance))){
+			this.customer.add(xLocation);
+			this.customer.add(yLocation);
+			this.customer.add(type);
+		}else{
+			if (type.equals("Pick Up")){
+				xLocation = "0";
+				yLocation = "0";
+				
+				this.customer.add(xLocation);
+				this.customer.add(yLocation);
+				this.customer.add(type);
+			}else{
+				throw new CustomerException();
+			}
+		}
+		
+		
+		
+	
 	}
 	
 	/**
@@ -39,7 +94,7 @@ public abstract class Customer {
 	 * @return The Customer's name.
 	 */
 	public final String getName(){
-		// TO DO
+		return this.customer.get(0);
 	}
 	
 	/**
@@ -47,7 +102,7 @@ public abstract class Customer {
 	 * @return The Customer's mobile number.
 	 */
 	public final String getMobileNumber(){
-		// TO DO
+		return this.customer.get(1);
 	}
 
 	/**
@@ -56,7 +111,7 @@ public abstract class Customer {
 	 * @return A human understandable description of the Customer's type.
 	 */
 	public final String getCustomerType(){
-		// TO DO
+		return this.customer.get(4);
 	}
 	
 	/**
@@ -65,7 +120,7 @@ public abstract class Customer {
 	 * @return The Customer's X location
 	 */
 	public final int getLocationX(){
-		// TO DO
+		return Integer.parseInt(this.customer.get(2));
 	}
 
 	/**
@@ -74,7 +129,7 @@ public abstract class Customer {
 	 * @return The Customer's Y location
 	 */
 	public final int getLocationY(){
-		// TO DO
+		return Integer.parseInt(this.customer.get(3));
 	}
 
 	/**
@@ -83,8 +138,8 @@ public abstract class Customer {
 	 * @return The distance between the restaurant and the Customer depending on the mode of delivery.
 	 */
 	public abstract double getDeliveryDistance();
-
-	
+		
+		
 	
 	/**
 	 * Compares *this* Customer object with an instance of an *other* Customer object and returns true if  

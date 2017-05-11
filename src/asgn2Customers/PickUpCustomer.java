@@ -27,7 +27,36 @@ public class PickUpCustomer extends Customer {
 	 * 
 	 */
 	public PickUpCustomer(String name, String mobileNumber, int locationX,  int locationY) throws CustomerException {
-		// TO DO	
+		
+		super(name, mobileNumber, locationY, locationY, "PUC");
+		int nameMin = 1;
+		int nameMax = 20;
+		int numberLenght = 10;
+		char zero = '0';
+		int resturantLocation = 0;
+		int maxDeliveryDistance = 10;
+		
+		
+		if ((name.length() >= nameMin) && (name.length() <= nameMax)){
+			
+			if (name.equals("                    ")){
+			
+				throw new CustomerException();
+			}
+			if ((mobileNumber.charAt(0) == zero) && (mobileNumber.length() == numberLenght)){
+				if (((locationX > resturantLocation) && (locationX <= maxDeliveryDistance)) &&
+						((locationY > resturantLocation) && (locationY <= maxDeliveryDistance))){
+					
+				}
+				
+			}
+			
+		  
+		}else {
+			throw new CustomerException();
+		}
+		
+			
 	}
 
 	/**
@@ -37,7 +66,8 @@ public class PickUpCustomer extends Customer {
 	 */
 	@Override
 	public double getDeliveryDistance() {
-		// TO DO
+		double pickUpDistance = 0;
+		return pickUpDistance;
 	}
 
 }

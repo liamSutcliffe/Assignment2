@@ -1,7 +1,13 @@
 package asgn2Restaurant;
 
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import asgn2Customers.Customer;
 import asgn2Exceptions.CustomerException;
 import asgn2Exceptions.LogHandlerException;
@@ -20,7 +26,6 @@ import asgn2Pizzas.Pizza;
 public class LogHandler {
 	
 
-
 	/**
 	 * Returns an ArrayList of Customer objects from the information contained in the log file ordered as they appear in the log file.
 	 * @param filename The file name of the log file
@@ -30,7 +35,26 @@ public class LogHandler {
 	 * 
 	 */
 	public static ArrayList<Customer> populateCustomerDataset(String filename) throws CustomerException, LogHandlerException{
-		// TO DO
+		
+		ArrayList<Customer> customers = new ArrayList<Customer>();
+		
+		  try
+		  {
+		    BufferedReader reader = new BufferedReader(new FileReader(filename));
+		    String line;
+		    while ((line = reader.readLine()) != null){
+		    	
+		    	customers.add(createCustomer(line));
+		    	
+		    reader.close();
+		    }
+		  }catch(IOException e) {
+			 throw new LogHandlerException();
+			  
+		  }
+		  return (ArrayList<Customer>) customers;
+
+		
 	}		
 
 	/**
@@ -55,8 +79,104 @@ public class LogHandler {
 	 * @throws LogHandlerException - If there was a problem parsing the line from the log file.
 	 */
 	public static Customer createCustomer(String line) throws CustomerException, LogHandlerException{
-		// TO DO
+		
+		ArrayList<String> splitLines = new ArrayList<String>();
+		
+		
+		String name = "";
+		String mobileNumber = "";
+		String customerCode = "";
+		int locationX = 0;
+		int locationY = 0;
+		
+		int nameMin = 1;
+		int nameMax = 20;
+		int numberLenght = 10;
+		char zero = '0';
+		int maxDeliveryDistance = 10;
+		int resturantLocation = 0;
+		Customer newCustomer;
+		splitLines = (ArrayList<String>) Arrays.asList(line.split(","));
+    	
+    	name = splitLines.get(2);
+    	mobileNumber = splitLines.get(3);
+    	customerCode = splitLines.get(4);
+    	locationX = Integer.parseInt(splitLines.get(5));
+    	locationY = Integer.parseInt(splitLines.get(6));
+    	
+    	
+    	
+    	
+    	if ((name.length() >= nameMin) && (name.length() <= nameMax)){
+			
+			if (name.equals("                    ")){
+				
+				
+				throw new CustomerException();
+				
+			}
+			if ((mobileNumber.charAt(0) == zero) && (mobileNumber.length() == numberLenght)){
+				
+				if (customerCode.equals("PUC")){
+					customerCode = "Pick Up";
+					newCustomer = new Customer(name, mobileNumber, locationX, locationY, customerCode) {
+						
+						@Override
+						public double getDeliveryDistance() {
+							// TODO Auto-generated method stub
+							return 0;
+						}
+					};
+					return newCustomer;
+		    	} 
+				
+				if (((locationX > resturantLocation) && (locationX <= maxDeliveryDistance)) &&
+						((locationY > resturantLocation) && (locationY <= maxDeliveryDistance))){
+					
+					if (customerCode.equals("DNC")){
+			    		customerCode = "Drone Delivery";
+			    		newCustomer = new Customer(name, mobileNumber, locationX, locationY, customerCode) {
+							
+							@Override
+							public double getDeliveryDistance() {
+								// TODO Auto-generated method stub
+								return 0;
+							}
+						};
+						return newCustomer;
+			    	}else if (customerCode.equals("DVC")){
+			    		customerCode = "Driver Delivery";
+			    		newCustomer = new Customer(name, mobileNumber, locationX, locationY, customerCode) {
+							
+							@Override
+							public double getDeliveryDistance() {
+								// TODO Auto-generated method stub
+								return 0;
+							}
+						};
+						return newCustomer;
+			    	}else{
+			    		
+			    		throw new CustomerException();
+			    	}
+					 
+					
+					
+				}
+				
+			}
+			
+		  
+		}else {
+			
+			throw new CustomerException();
+		}
+    	
+    	splitLines.clear();
+    	
+	return null;
 	}
+
 	
 	/**
 	 * Creates a Pizza object by parsing the information contained in a single line of the log file. The format of 
@@ -69,7 +189,7 @@ public class LogHandler {
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
 		
 		// TO DO	
-		return null;
+		
 	}
 
 }

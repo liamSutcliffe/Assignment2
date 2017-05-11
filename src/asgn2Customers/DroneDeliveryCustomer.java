@@ -12,7 +12,7 @@ import asgn2Exceptions.CustomerException;
  */
 public class DroneDeliveryCustomer extends Customer {
 
-
+	int resturantLocation = 0;
 	/**
 	 *  This class represents a customer of the Pizza Palace restaurant that has chosen to have their pizza delivered by 
 	 *  a drone.  A CustomerException is thrown if the any of the constraints listed in Section 5.2 of the Assignment
@@ -29,7 +29,33 @@ public class DroneDeliveryCustomer extends Customer {
 	 * 
 	 */
 	public DroneDeliveryCustomer(String name, String mobileNumber, int locationX, int locationY) throws CustomerException {
-		// TO DO		
+		super(name, mobileNumber, locationY, locationY, "DNC");
+		int nameMin = 1;
+		int nameMax = 20;
+		int numberLenght = 10;
+		char zero = '0';
+		
+		int maxDeliveryDistance = 10;
+		
+		
+		if ((name.length() >= nameMin) && (name.length() <= nameMax)){
+			
+			if (name.equals("                    ")){
+			
+				throw new CustomerException();
+			}
+			if ((mobileNumber.charAt(0) == zero) && (mobileNumber.length() == numberLenght)){
+				if (((locationX > resturantLocation) && (locationX <= maxDeliveryDistance)) &&
+						((locationY > resturantLocation) && (locationY <= maxDeliveryDistance))){
+					
+				}
+				
+			}
+			
+		  
+		}else {
+			throw new CustomerException();
+		}		
 	}
 
 	/**
@@ -40,8 +66,7 @@ public class DroneDeliveryCustomer extends Customer {
 	 */
 	@Override
 	public double getDeliveryDistance() {
-		// TO DO
-
+		return Math.sqrt(((resturantLocation - this.getLocationX())^2) + ((resturantLocation - this.getLocationY())^2));
 	}
 	
 
