@@ -1,10 +1,13 @@
 package asgn2Tests;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import org.junit.Test;
 import org.junit.Before;
 import asgn2Customers.Customer;
+import asgn2Pizzas.MargheritaPizza;
+import asgn2Pizzas.MeatLoversPizza;
 import asgn2Pizzas.Pizza;
 import asgn2Restaurant.*;
 import asgn2Exceptions.CustomerException;
@@ -30,9 +33,15 @@ public class RestaurantPizzaTests {
 		
 	}
 	
-	@Test (expected = CustomerException.class)
-	public boolean processLogTest() throws CustomerException, PizzaException, LogHandlerException{
+	@Before
+	public void pizzaToTest() throws PizzaException{
+		MeatLoversPizza pizza = new MeatLoversPizza(5, LocalTime.of(10, 10, 00), LocalTime.of(10, 02, 00));
+		
+	}
 	
+	@Test (expected = CustomerException.class)
+	public void processLogLogHandlerExceptionTest() throws CustomerException, PizzaException, LogHandlerException{
+		.processLog("");
 		
 	}
 
@@ -43,6 +52,7 @@ public class RestaurantPizzaTests {
 	
 	@Test
 	public void getPizzaByIndexTest() throws PizzaException{
+		
 		// TO DO
 	}
 	
