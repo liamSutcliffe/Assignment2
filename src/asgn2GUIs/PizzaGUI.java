@@ -44,6 +44,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	JButton pickUpButton;
 	String filename;
 	JLabel exceptionLabel;
+	File file;
+	
 	
 	/**
 	 * Creates a new Pizza GUI with the specified title 
@@ -69,39 +71,48 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
         JPanel exceptionPanel = new JPanel();
         label = new JLabel("Select a log file to open", JLabel.LEFT);
         JPanel buttonLeftPanel = new JPanel();
-        exceptionLabel = new JLabel("");
+        this.exceptionLabel = new JLabel("");
         fileButton = new JButton("Open");
         fileButton.addActionListener(new ActionListener()
         
         {
             public void actionPerformed(ActionEvent ae)
             {
-            	/*final JFileChooser fc = new JFileChooser();
+            	
+            	final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(PizzaGUI.this);
 				
 				if(returnVal==JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				filename = file.getAbsolutePath();
+					file = fc.getSelectedFile();
+					filename = file.getAbsolutePath();
+					
+					
+						try {
+							restaurant.processLog(filename);
+						} catch (CustomerException | PizzaException | LogHandlerException e) {
+							
+							
+							exceptionLabel.setText(e.toString());
+						}
+					
+					
+					JTable customerInfo = new JTable(4, restaurant.getNumCustomerOrders());
+					JPanel tablePanel = new JPanel();
+					tablePanel.setLayout(new GridLayout(7, 7, 10, 10));
+					tablePanel.add(customerInfo);
+					
+					contentPane.add(tablePanel);
+					
 				} else if(returnVal==JFileChooser.CANCEL_OPTION) {
 				}
-				*/
 				
-					try {
-						restaurant.processLog("201701.txt");
-					} catch (CustomerException e) {
-						exceptionLabel.setText("There was an error with the cusotomer");
-						
-						
-					} catch (PizzaException e) {
-						exceptionLabel.setText("There was an error with the pizza");
-						
-					} catch (LogHandlerException e) {
-						exceptionLabel.setText("There was an error with the file");
-					}
+				
 					
 				
             }
         });
+        
+        
         labelPanel.add(label);
         exceptionPanel.add(exceptionLabel);
         buttonLeftPanel.add(fileButton);
@@ -111,7 +122,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
         leftPanel.add(exceptionPanel);
         contentPane.add(leftPanel);
 
-        JPanel buttonPanel = new JPanel();
+        /*JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(7, 7, 10, 10));
        
                 pickUpButton = new JButton("Pick Up");
@@ -130,7 +141,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
             
         
         contentPane.add(pickUpButton);
-
+*/
         setContentPane(contentPane);
         pack();
         setLocationRelativeTo(null);
