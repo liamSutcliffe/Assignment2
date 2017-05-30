@@ -3,11 +3,16 @@ package asgn2GUIs;
 import java.awt.event.ActionEvent;
 
 
+
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.DecimalFormat;
 
 import javax.swing.JPanel;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.text.DefaultCaret;
 
 import asgn2Customers.Customer;
@@ -45,6 +50,13 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	String filename;
 	JLabel exceptionLabel;
 	File file;
+	String[] customerColumnNames = {"Customer Name", "Mobile Number", "Type", "X Location", "Y Location", "Delivery Distance"};
+	String[] pizzaColumnNames = {"Pizza Type", "Quantity", "Order Price", "Order Cost", "Order Profit"};
+	Customer getCustomerData;
+	String[] currentCustomerData;
+	Pizza getPizzaData;
+	String[] currentPizzaData;
+	DecimalFormat doubleFormat = new DecimalFormat("#.00");
 	
 	
 	/**
@@ -54,31 +66,40 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	
 	public PizzaGUI(String title) {
 		
+		
 		super(title);
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+		// create boarders
         JPanel contentPane = new JPanel();
         contentPane.setLayout(new FlowLayout(FlowLayout.LEFT, 200, 200));
         contentPane.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
 
+        // Left container
         JPanel leftPanel = new JPanel();
         leftPanel.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
         leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.Y_AXIS));    
         leftPanel.setAlignmentX(LEFT_ALIGNMENT);
         JPanel labelPanel = new JPanel();
         JPanel exceptionPanel = new JPanel();
+        
         label = new JLabel("Select a log file to open", JLabel.LEFT);
         JPanel buttonLeftPanel = new JPanel();
         this.exceptionLabel = new JLabel("");
         fileButton = new JButton("Open");
+        
+        
+		
+        
+        // Open file
         fileButton.addActionListener(new ActionListener()
         
         {
             public void actionPerformed(ActionEvent ae)
             {
-            	
+            	// Open file chooser
             	final JFileChooser fc = new JFileChooser();
 				int returnVal = fc.showOpenDialog(PizzaGUI.this);
 				
@@ -95,11 +116,60 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 							exceptionLabel.setText(e.toString());
 						}
 					
+					// Create Tables to display data
+					JTable customerInfo = new JTable(6, restaurant.getNumCustomerOrders());
+					JTable pizzaInfo = new JTable(5, restaurant.getNumPizzaOrders());
 					
-					JTable customerInfo = new JTable(4, restaurant.getNumCustomerOrders());
+					DefaultTableModel model = (DefaultTableModel) customerInfo.getModel();
+					DefaultTableModel modelPizza = (DefaultTableModel) pizzaInfo.getModel();
+					
+					model.addRow(customerColumnNames);
+				    modelPizza.addRow(pizzaColumnNames);
+					
+					
+					
+					for(int customer = 0; customer < restaurant.getNumCustomerOrders(); customer++){
+						
+						try {
+							getCustomerData = restaurant.getCustomerByIndex(customer);
+						} catch (CustomerException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						// Put customer data into tables
+						currentCustomerData[0] = getCustomerData.getName();
+						currentCustomerData[1] = getCustomerData.getMobileNumber();
+						currentCustomerData[2] = getCustomerData.getCustomerType();
+						currentCustomerData[3] = Integer.toString(getCustomerData.getLocationX());
+						currentCustomerData[4] = Integer.toString(getCustomerData.getLocationY());
+						currentCustomerData[5] = doubleFormat.format(getCustomerData.getDeliveryDistance());
+
+					    model.addRow(currentCustomerData);
+					    
+					    try {
+							getPizzaData = restaurant.getPizzaByIndex(customer);
+						} catch (PizzaException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+							
+					    // Pizza Data
+					    currentPizzaData[0] = getPizzaData.getPizzaType();
+						currentPizzaData[1] = Integer.toString(getPizzaData.getQuantity());
+						currentPizzaData[2] = doubleFormat.format(getPizzaData.getOrderPrice());
+						currentPizzaData[3] = doubleFormat.format(getPizzaData.getOrderCost());
+						currentPizzaData[4] = doubleFormat.format(getPizzaData.getOrderProfit());
+						
+					    modelPizza.addRow(currentPizzaData);
+						
+					}
+						
+					
 					JPanel tablePanel = new JPanel();
 					tablePanel.setLayout(new GridLayout(7, 7, 10, 10));
 					tablePanel.add(customerInfo);
+					tablePanel.add(pizzaInfo);
 					
 					contentPane.add(tablePanel);
 					
@@ -112,7 +182,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
             }
         });
         
-        
+        // Add elements to GUI
         labelPanel.add(label);
         exceptionPanel.add(exceptionLabel);
         buttonLeftPanel.add(fileButton);
@@ -142,6 +212,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
         
         contentPane.add(pickUpButton);
 */
+        // Display GUI
         setContentPane(contentPane);
         pack();
         setLocationRelativeTo(null);
