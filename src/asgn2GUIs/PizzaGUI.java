@@ -53,10 +53,12 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	String[] customerColumnNames = {"Customer Name", "Mobile Number", "Type", "X Location", "Y Location", "Delivery Distance"};
 	String[] pizzaColumnNames = {"Pizza Type", "Quantity", "Order Price", "Order Cost", "Order Profit"};
 	Customer getCustomerData;
-	String[] currentCustomerData;
+	String[] currentCustomerData = new String[6];
 	Pizza getPizzaData;
-	String[] currentPizzaData;
+	String[] currentPizzaData = new String[5];
 	DecimalFormat doubleFormat = new DecimalFormat("#.00");
+	JTable customerInfo;
+	JTable pizzaInfo;
 	
 	
 	/**
@@ -87,7 +89,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
         
         label = new JLabel("Select a log file to open", JLabel.LEFT);
         JPanel buttonLeftPanel = new JPanel();
-        this.exceptionLabel = new JLabel("");
+        exceptionLabel = new JLabel("");
         fileButton = new JButton("Open");
         
         
@@ -112,19 +114,20 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 							restaurant.processLog(filename);
 						} catch (CustomerException | PizzaException | LogHandlerException e) {
 							
-							
-							exceptionLabel.setText(e.toString());
+							// Display exception
+						exceptionLabel.setText(e.toString());
 						}
 					
 					// Create Tables to display data
-					JTable customerInfo = new JTable(6, restaurant.getNumCustomerOrders());
-					JTable pizzaInfo = new JTable(5, restaurant.getNumPizzaOrders());
+					customerInfo = new JTable(6, restaurant.getNumCustomerOrders());
+					pizzaInfo = new JTable(5, restaurant.getNumPizzaOrders());
 					
 					DefaultTableModel model = (DefaultTableModel) customerInfo.getModel();
 					DefaultTableModel modelPizza = (DefaultTableModel) pizzaInfo.getModel();
 					
 					model.addRow(customerColumnNames);
 				    modelPizza.addRow(pizzaColumnNames);
+				    modelPizza.addRow(currentPizzaData);
 					
 					
 					
@@ -133,8 +136,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 						try {
 							getCustomerData = restaurant.getCustomerByIndex(customer);
 						} catch (CustomerException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							exceptionLabel.setText(e.toString());
 						}
 						
 						// Put customer data into tables
@@ -147,11 +149,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 
 					    model.addRow(currentCustomerData);
 					    
-					    try {
+					   /* try {
 							getPizzaData = restaurant.getPizzaByIndex(customer);
 						} catch (PizzaException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							exceptionLabel.setText(e.toString());
 						}
 							
 					    // Pizza Data
@@ -162,7 +163,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 						currentPizzaData[4] = doubleFormat.format(getPizzaData.getOrderProfit());
 						
 					    modelPizza.addRow(currentPizzaData);
-						
+						*/
 					}
 						
 					
@@ -225,12 +226,6 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		restaurant = new PizzaRestaurant();
 		
 	}
-
-
-	
-	
-	
-
 
 
 
