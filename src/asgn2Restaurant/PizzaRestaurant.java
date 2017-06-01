@@ -87,7 +87,7 @@ public class PizzaRestaurant {
 	 * @throws PizzaException if index is invalid.
 	 */	
 	public Pizza getPizzaByIndex(int index) throws PizzaException{
-		// TO DO
+		return pizzas.get(index);
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class PizzaRestaurant {
 	 * @return the number of objects contained in the pizzas field.
 	 */
 	public int getNumPizzaOrders(){
-		// TO DO
+		return pizzas.size();
 	}
 
 	/**
@@ -133,7 +133,13 @@ public class PizzaRestaurant {
 	 * @return the total profit for all of the Pizza objects in the pizzas field.
 	 */	
 	public double getTotalProfit(){
-		// TO DO
+		double totalProfit = 0;
+		
+		for (Pizza pizza: pizzas){
+			totalProfit += pizza.getOrderProfit();
+		}
+		
+		return totalProfit;
 	}
 	
 	/**

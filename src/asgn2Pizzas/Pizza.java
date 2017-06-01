@@ -1,6 +1,10 @@
 package asgn2Pizzas;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+import asgn2Pizzas.PizzaTopping;
+import asgn2Exceptions.PizzaException;
 
 
 /**
@@ -9,11 +13,10 @@ import java.time.LocalTime;
  * Each of these subclasses have a different set of toppings. A description of the class's fields
  * and their constraints is provided in Section 5.1 of the Assignment Specification. 
  * 
- * @author Person A
+ * @author Liam Sutcliffe - n9740457
  *
  */
 public abstract class Pizza  {
-	
 	/**
 	 *  This class represents a pizza produced at the Pizza Palace restaurant.  A detailed description of the class's fields
 	 *  and parameters is provided in the Assignment Specification, in particular in Section 5.1. 
@@ -31,18 +34,97 @@ public abstract class Pizza  {
 	 * @throws PizzaException if supplied parameters are invalid 
 	 * 
 	 */
+	
+	List<Object> Pizza;
+	
 	public Pizza(int quantity, LocalTime orderTime, LocalTime deliveryTime, String type, double price) throws PizzaException{
-		// TO DO	
+		
+		this.Pizza = new ArrayList<Object>();
+		
+		int maxQuantity = 10;
+		int minQuantity = 1;
+		int minLocalTimeHour = 19;
+		int maxLocalTimeHour = 23;
+		String Pizza1 = "Margherita";
+		String Pizza2 = "Vegetarian";
+		String Pizza3 = "Meat Lovers";
+		int Pizza1Cost = 8;
+		int Pizza2Cost = 10;
+		int Pizza3Cost = 12;
+		
+		// Quantity Check
+		
+		if((quantity <= minQuantity) && (quantity >= maxQuantity)){
+			this.Pizza.add(quantity);
+		} else {
+			throw new PizzaException("You must ");
+		}
+		
+		// Time Check
+		
+		if((orderTime.getHour() < maxLocalTimeHour) && (orderTime.getHour() > minLocalTimeHour)){
+			this.Pizza.add(orderTime);	
+			this.Pizza.add(deliveryTime);
+		} else {
+			throw new PizzaException("We are unable to deliver at this time. Try Between 7:00pm - 11:00pm");
+		}
+		
+		// Pizza Type Check
+		
+		if((type.equals(Pizza1)) || (type.equals(Pizza2)) || (type.equals(Pizza3))){
+			this.Pizza.add(type);
+		} else {
+			throw new PizzaException("No such Pizza exists");
+		}
+		
+		// Price Check 
+		
+		if((type.equals(Pizza1)) && (price == Pizza1Cost)){
+			price *= quantity;
+			this.Pizza.add(price);
+		} else if ((type.equals(Pizza2)) && (price == Pizza2Cost)) {
+			price *= quantity;
+			this.Pizza.add(price);
+		} else if ((type.equals(Pizza3)) && (price == Pizza3Cost)) {
+			price *= quantity;
+			this.Pizza.add(price);
+		} else {
+			throw new PizzaException("The pizza specified does not cost this much");
+		}
+
 	}
 
 	/**
-	 * Calculates how much a pizza would could to make calculated from its toppings.
+	 * Calculates how much a pizza would cost to make calculated from its toppings.
 	 *  
      * <P> PRE: TRUE
 	 * <P> POST: The cost field is set to sum of the Pizzas's toppings
 	 */
 	public final void calculateCostPerPizza(){
-		// TO DO
+		double cost = 0;
+		String Pizza1 = "Margherita";
+		String Pizza2 = "Vegetarian";
+		String Pizza3 = "Meat Lovers";
+		
+		
+		if(this.Pizza.get(3) == Pizza1) {
+			cost = PizzaTopping.CHEESE.getCost() 
+			+ PizzaTopping.TOMATO.getCost();
+		} else if (this.Pizza.get(3) == Pizza2) {
+			cost = PizzaTopping.CHEESE.getCost() 
+			+ PizzaTopping.TOMATO.getCost() 
+			+ PizzaTopping.EGGPLANT.getCost() 
+			+ PizzaTopping.MUSHROOM.getCost() 
+			+ PizzaTopping.CAPSICUM.getCost();
+		} else if (this.Pizza.get(3) == Pizza3) {
+			cost = PizzaTopping.CHEESE.getCost() 
+			+ PizzaTopping.TOMATO.getCost() 
+			+ PizzaTopping.BACON.getCost()
+			+ PizzaTopping.PEPPERONI.getCost()
+			+ PizzaTopping.SALAMI.getCost();
+		}
+		
+		this.Pizza.add(5, cost);	
 	}
 	
 	/**
@@ -50,7 +132,13 @@ public abstract class Pizza  {
 	 * @return The amount that an individual pizza costs to make.
 	 */
 	public final double getCostPerPizza(){
-		// TO DO
+		
+		double price = 0;
+		
+		this.calculateCostPerPizza();
+		price = this.Pizza.indexOf(5);
+		
+		return price;
 	}
 
 	/**
@@ -58,7 +146,18 @@ public abstract class Pizza  {
 	 * @return The amount that an individual pizza is sold to the customer.
 	 */
 	public final double getPricePerPizza(){
-		// TO DO
+		
+		double price = 0;
+		
+		if(this.Pizza.get(3).equals("Margherita")){
+			price = 8.0;
+		} else if (this.Pizza.get(3).equals("Vegetarian")){
+			price = 10.0;
+		} else if (this.Pizza.get(3).equals("Meat Lovers")) {
+			price = 12.0;
+		}
+		
+		return price;
 	}
 
 	/**
@@ -66,7 +165,14 @@ public abstract class Pizza  {
 	 * @return The amount that the entire order costs to make, taking into account the type and quantity of pizzas. 
 	 */
 	public final double getOrderCost(){
-		// TO DO
+		double cost = 0;
+		int quantity = (int) this.Pizza.get(0);
+		
+		this.calculateCostPerPizza();
+		cost = (double) this.Pizza.get(5);
+		cost *= quantity;
+
+		return cost;
 	}
 	
 	/**
@@ -74,7 +180,8 @@ public abstract class Pizza  {
 	 * @return The amount that the entire order is sold to the customer, taking into account the type and quantity of pizzas. 
 	 */
 	public final double getOrderPrice(){
-		// TO DO
+		double price = (double) this.Pizza.get(4);
+		return price;
 	}
 	
 	
@@ -83,7 +190,13 @@ public abstract class Pizza  {
 	 * @return  Returns the profit made by the restaurant on the order which is the order price minus the order cost.
 	 */
 	public final double getOrderProfit(){
-		// TO DO
+		double profit = 0;
+		double cost = this.getOrderCost();
+		double price = this.getOrderPrice();
+		
+		profit = price - cost;
+		
+		return profit;
 	}
 	
 
@@ -92,8 +205,48 @@ public abstract class Pizza  {
 	 * @param topping -  A topping as specified in the enumeration PizzaTopping
 	 * @return Returns  true if the instance of Pizza contains the specified topping and false otherwise.
 	 */
+	
+	ArrayList<PizzaTopping> Margherita;
+	ArrayList<PizzaTopping> MeatLovers;
+	ArrayList<PizzaTopping> Vegetarian;
+	
 	public final boolean containsTopping(PizzaTopping topping){
-		// TO DO
+		boolean bool = false;
+		
+		Margherita = new ArrayList<PizzaTopping>();
+		MeatLovers = new ArrayList<PizzaTopping>();
+		Vegetarian = new ArrayList<PizzaTopping>();
+		
+		Margherita.add(PizzaTopping.CHEESE);
+		Margherita.add(PizzaTopping.TOMATO);
+		
+		MeatLovers.add(PizzaTopping.CHEESE);
+		MeatLovers.add(PizzaTopping.TOMATO);
+		MeatLovers.add(PizzaTopping.PEPPERONI);
+		MeatLovers.add(PizzaTopping.BACON);
+		MeatLovers.add(PizzaTopping.SALAMI);
+		
+		Vegetarian.add(PizzaTopping.CHEESE);
+		Vegetarian.add(PizzaTopping.TOMATO);
+		Vegetarian.add(PizzaTopping.EGGPLANT);
+		Vegetarian.add(PizzaTopping.MUSHROOM);
+		Vegetarian.add(PizzaTopping.CAPSICUM);
+		
+		if(this.Pizza.get(3).equals("Margherita")){
+			if(Margherita.contains(topping)){
+				bool = true;
+			}
+		} else if (this.Pizza.get(3).equals("Vegetarian")){
+			if(Vegetarian.contains(topping)){
+				bool = true;
+			}
+		} else if (this.Pizza.get(3).equals("Meat Lovers")) {
+			if(MeatLovers.contains(topping)){
+				bool = true;
+			}
+		}
+		
+		return bool;
 	}
 	
 	/**
@@ -101,7 +254,8 @@ public abstract class Pizza  {
 	 * @return the quantity of pizzas ordered. 
 	 */
 	public final int getQuantity(){
-		// TO DO
+		 int quantity = (int) this.Pizza.get(0);
+		 return quantity;
 	}
 
 	/**
@@ -110,7 +264,8 @@ public abstract class Pizza  {
 	 * @return A human understandable description of the Pizza's type.
 	 */
 	public final String getPizzaType(){
-		// TO DO
+		String type = (String) this.Pizza.get(3);
+		return type;
 	}
 
 
