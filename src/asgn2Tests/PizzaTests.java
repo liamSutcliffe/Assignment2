@@ -23,7 +23,7 @@ public class PizzaTests {
 	@Test (expected  = PizzaException.class)
 	public void PizzaExceptionTest() throws PizzaException {
 		
-		Pizza meatexceptiontest = new asgn2Pizzas.MeatLoversPizza(10, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
+		Pizza meatexceptiontest = new asgn2Pizzas.MeatLoversPizza(11, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
 		
 	}
 	
