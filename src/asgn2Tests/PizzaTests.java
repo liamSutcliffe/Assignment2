@@ -21,22 +21,31 @@ import java.time.LocalTime;
 public class PizzaTests {
 	
 	@Test (expected  = PizzaException.class)
-	public void PizzaExceptionTest() throws PizzaException {
-		
-		Pizza meatexceptiontest = new asgn2Pizzas.MeatLoversPizza(11, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
+	public void PizzaExceptionTest1() throws PizzaException {
+		Pizza meatexceptiontest = new asgn2Pizzas.MeatLoversPizza(100, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
+
+	}
+
+	@Test (expected  = PizzaException.class)
+	public void PizzaExceptionTest2() throws PizzaException {
+		Pizza meatexceptiontest = new asgn2Pizzas.MeatLoversPizza(10000, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
 		
 	}
 	
 	@Test (expected  = PizzaException.class)
-	public void PizzaExceptionTimeTest() throws PizzaException {
-		
+	public void PizzaExceptionTimeTest1() throws PizzaException {
 		Pizza meattimetest = new asgn2Pizzas.MeatLoversPizza(1, LocalTime.of(10, 00, 00), LocalTime.of(10, 02, 00));
+		
+	}
+	
+	@Test (expected  = PizzaException.class)
+	public void PizzaExceptionTimeTest2() throws PizzaException {
+		Pizza meattimetest = new asgn2Pizzas.MeatLoversPizza(1, LocalTime.of(10, 10, 00), LocalTime.of(10, 02, 00));
 		
 	}
 	
 	@Test 
 	public void PizzaMargheritaTest() throws PizzaException {
-		
 		Pizza margheritatest = new asgn2Pizzas.MargheritaPizza(1, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
 		assertEquals("Margherita", margheritatest.getPizzaType());
 	}
@@ -44,7 +53,6 @@ public class PizzaTests {
 	
 	@Test 
 	public void PizzaMeatTest() throws PizzaException {
-		
 		Pizza meattest = new asgn2Pizzas.MeatLoversPizza(1, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
 		assertEquals("Meat Lovers", meattest.getPizzaType());
 	}

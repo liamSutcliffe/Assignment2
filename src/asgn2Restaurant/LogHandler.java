@@ -49,9 +49,9 @@ public class LogHandler {
 		    while ((line = reader.readLine()) != null){
 		    	
 		    	customers.add(createCustomer(line));
-		    	
+		    }	
 		    reader.close();
-		    }
+		    
 		  }catch(IOException e) {
 			 throw new LogHandlerException();
 			  
@@ -100,7 +100,7 @@ public class LogHandler {
 	 */
 	public static Customer createCustomer(String line) throws CustomerException, LogHandlerException{
 		
-		ArrayList<String> splitLines = new ArrayList<String>();
+		ArrayList<String> splitData = new ArrayList<String>();
 		
 		
 		String name = "";
@@ -116,13 +116,14 @@ public class LogHandler {
 		int maxDeliveryDistance = 10;
 		int resturantLocation = 0;
 		Customer newCustomer;
-		splitLines = (ArrayList<String>) Arrays.asList(line.split(","));
+		String[] splitLines = line.split(",");
+		splitData = new ArrayList<String>(Arrays.asList(splitLines));
     	
-    	name = splitLines.get(2);
-    	mobileNumber = splitLines.get(3);
-    	customerCode = splitLines.get(4);
-    	locationX = Integer.parseInt(splitLines.get(5));
-    	locationY = Integer.parseInt(splitLines.get(6));
+    	name = splitData.get(2);
+    	mobileNumber = splitData.get(3);
+    	customerCode = splitData.get(4);
+    	locationX = Integer.parseInt(splitData.get(5));
+    	locationY = Integer.parseInt(splitData.get(6));
     	
     	
     	
@@ -192,7 +193,7 @@ public class LogHandler {
 			throw new CustomerException();
 		}
     	
-    	splitLines.clear();
+    	splitData.clear();
     	
 	return null;
 	}
