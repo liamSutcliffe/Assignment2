@@ -13,7 +13,7 @@ import asgn2Restaurant.LogHandler;
 /**
  * A class that tests the methods relating to the creation of Customer objects in the asgn2Restaurant.LogHander class.
  *
- * @author Person A
+ * @author n9740457
  */
 public class LogHandlerCustomerTests {
 	

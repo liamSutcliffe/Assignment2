@@ -13,7 +13,7 @@ import asgn2Exceptions.PizzaException;
  * Each of these subclasses have a different set of toppings. A description of the class's fields
  * and their constraints is provided in Section 5.1 of the Assignment Specification. 
  * 
- * @author Liam Sutcliffe - n9740457
+ * @author n9740457
  *
  */
 public abstract class Pizza  {
@@ -45,24 +45,24 @@ public abstract class Pizza  {
 		int minQuantity = 1;
 		int minLocalTimeHour = 19;
 		int maxLocalTimeHour = 23;
-		String Pizza1 = "Margherita";
-		String Pizza2 = "Vegetarian";
-		String Pizza3 = "Meat Lovers";
+		String Pizza1 = "PZM";
+		String Pizza2 = "PZV";
+		String Pizza3 = "PZL";
 		int Pizza1Cost = 8;
 		int Pizza2Cost = 10;
 		int Pizza3Cost = 12;
 		
 		// Quantity Check
 		
-		if((quantity <= minQuantity) && (quantity >= maxQuantity)){
+		if((quantity >= minQuantity) && (quantity <= maxQuantity)){
 			this.Pizza.add(quantity);
 		} else {
-			throw new PizzaException("You must ");
+			throw new PizzaException("You must order at least one pizza or less than 10");
 		}
 		
 		// Time Check
 		
-		if((orderTime.getHour() < maxLocalTimeHour) && (orderTime.getHour() > minLocalTimeHour)){
+		if((orderTime.getHour() <= maxLocalTimeHour) && (orderTime.getHour() >= minLocalTimeHour)){
 			this.Pizza.add(orderTime);	
 			this.Pizza.add(deliveryTime);
 		} else {
@@ -102,9 +102,9 @@ public abstract class Pizza  {
 	 */
 	public final void calculateCostPerPizza(){
 		double cost = 0;
-		String Pizza1 = "Margherita";
-		String Pizza2 = "Vegetarian";
-		String Pizza3 = "Meat Lovers";
+		String Pizza1 = "PZM";
+		String Pizza2 = "PZV";
+		String Pizza3 = "PZL";
 		
 		
 		if(this.Pizza.get(3) == Pizza1) {
@@ -149,11 +149,11 @@ public abstract class Pizza  {
 		
 		double price = 0;
 		
-		if(this.Pizza.get(3).equals("Margherita")){
+		if(this.Pizza.get(3).equals("PZM")){
 			price = 8.0;
-		} else if (this.Pizza.get(3).equals("Vegetarian")){
+		} else if (this.Pizza.get(3).equals("PZV")){
 			price = 10.0;
-		} else if (this.Pizza.get(3).equals("Meat Lovers")) {
+		} else if (this.Pizza.get(3).equals("PZL")) {
 			price = 12.0;
 		}
 		
@@ -232,15 +232,15 @@ public abstract class Pizza  {
 		Vegetarian.add(PizzaTopping.MUSHROOM);
 		Vegetarian.add(PizzaTopping.CAPSICUM);
 		
-		if(this.Pizza.get(3).equals("Margherita")){
+		if(this.Pizza.get(3).equals("PZM")){
 			if(Margherita.contains(topping)){
 				bool = true;
 			}
-		} else if (this.Pizza.get(3).equals("Vegetarian")){
+		} else if (this.Pizza.get(3).equals("PZV")){
 			if(Vegetarian.contains(topping)){
 				bool = true;
 			}
-		} else if (this.Pizza.get(3).equals("Meat Lovers")) {
+		} else if (this.Pizza.get(3).equals("PZL")) {
 			if(MeatLovers.contains(topping)){
 				bool = true;
 			}

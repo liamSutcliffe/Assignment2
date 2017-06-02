@@ -24,7 +24,7 @@ import asgn2Pizzas.VegetarianPizza;
  * and Customer object - either as an individual Pizza/Customer object or as an
  * ArrayList of Pizza/Customer objects.
  * 
- * @author Person A and Person B
+ * @author n9740457 and Person B
  *
  */
 public class LogHandler {
@@ -80,8 +80,9 @@ public class LogHandler {
 		    	
 		    	Pizzas.add(createPizza(line));
 		    	
-		    reader.close();
 		    }
+		    reader.close();
+		    
 		  }catch(IOException e) {
 			 throw new LogHandlerException();
 			  
@@ -209,27 +210,27 @@ public class LogHandler {
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
 		
-		ArrayList<String> splitLines = new ArrayList<String>();	
+		ArrayList<String> splitData = new ArrayList<String>();
+		String[] splitLines = line.split(",");
+		splitData = new ArrayList<String>(Arrays.asList(splitLines));
 		
-		splitLines = (ArrayList<String>) Arrays.asList(line.split(","));
-		
-		LocalTime orderTime =  LocalTime.parse(splitLines.get(0));
-		LocalTime deliveryTime = LocalTime.parse(splitLines.get(1));
-		String pizzaCode = splitLines.get(7);
-		int quantity = Integer.parseInt(splitLines.get(8));
+		LocalTime orderTime =  LocalTime.parse(splitData.get(0));
+		LocalTime deliveryTime = LocalTime.parse(splitData.get(1));
+		String pizzaCode = splitData.get(7);
+		int quantity = Integer.parseInt(splitData.get(8));
 		
 	
-		String Pizza1 = "Margherita";
-		String Pizza2 = "Vegetarian";
-		String Pizza3 = "Meat Lovers";
+		String Pizza1 = "PZM";
+		String Pizza2 = "PZV";
+		String Pizza3 = "PZL";
 		int maxQuantity = 10;
 		int minQuantity = 1;
 		int minLocalTimeHour = 19;
 		int maxLocalTimeHour = 23;
 		
-		if((orderTime.getHour() < maxLocalTimeHour) && (orderTime.getHour() > minLocalTimeHour)){
+		if((orderTime.getHour() <= maxLocalTimeHour) && (orderTime.getHour() >= minLocalTimeHour)){
 			
-			if((quantity <= minQuantity) && (quantity >= maxQuantity)){
+			if((quantity >= minQuantity) && (quantity <= maxQuantity)){
 				
 				if((pizzaCode.equals(Pizza1)) || (pizzaCode.equals(Pizza2)) || (pizzaCode.equals(Pizza3))){
 					
@@ -249,7 +250,7 @@ public class LogHandler {
 				}
 				
 			} else {
-				throw new PizzaException("You must ");
+				throw new PizzaException("You must order at least one pizza or less than 10");
 			}
 			
 			

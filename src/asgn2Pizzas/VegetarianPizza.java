@@ -11,7 +11,7 @@ import asgn2Exceptions.PizzaException;
  *  The vegetarian pizza has certain toppings listed in Section 5.1 of the Assignment Specification Document.  
  *  A description of the class's fields and their constraints is provided in Section 5.1 of the Assignment Specification.
  * 
- * @author PersonA
+ * @author n9740457
  *
  */
 public class VegetarianPizza extends Pizza {
@@ -32,7 +32,7 @@ public class VegetarianPizza extends Pizza {
 	 *
 	 */
 	public VegetarianPizza(int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException {
-		super(quantity, orderTime, deliveryTime, "Vegetarian",10.00);
+		super(quantity, orderTime, deliveryTime, "PZV",10.00);
 		int maxQuantity = 10;
 		int minQuantity = 1;
 		int minLocalTimeHour = 19;
@@ -40,15 +40,15 @@ public class VegetarianPizza extends Pizza {
 		
 		// Quantity Check
 		
-		if((quantity <= minQuantity) && (quantity >= maxQuantity)){
+		if((quantity >= minQuantity) && (quantity <= maxQuantity)){
 			this.Pizza.add(quantity);
 		} else {
-			throw new PizzaException("You must ");
+			throw new PizzaException("You must order at least one pizza or less than 10");
 		}
 		
 		// Time Check
 		
-		if((orderTime.getHour() < maxLocalTimeHour) && (orderTime.getHour() > minLocalTimeHour)){
+		if((orderTime.getHour() <= maxLocalTimeHour) && (orderTime.getHour() >= minLocalTimeHour)){
 			this.Pizza.add(orderTime);	
 			this.Pizza.add(deliveryTime);
 		} else {

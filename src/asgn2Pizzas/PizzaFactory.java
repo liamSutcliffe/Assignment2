@@ -2,6 +2,10 @@ package asgn2Pizzas;
 
 import java.time.LocalTime;
 
+import asgn2Customers.DriverDeliveryCustomer;
+import asgn2Customers.DroneDeliveryCustomer;
+import asgn2Customers.PickUpCustomer;
+import asgn2Exceptions.CustomerException;
 import asgn2Exceptions.PizzaException;
 
 /**
@@ -9,7 +13,7 @@ import asgn2Exceptions.PizzaException;
  * The classes are instantiated from one of the three valid pizza codes outlined in
  * Section 5.3 of the Assignment Specification. Any other code will throw a PizzaException.      
  *  
- * @author Person A
+ * @author n9740457
  *
  */
 
@@ -29,8 +33,16 @@ public class PizzaFactory {
 	 * @return A valid Pizza object using the specified parameters 
 	 * */
 	public static Pizza getPizza(String pizzaCode, int quantity, LocalTime orderTime, LocalTime deliveryTime) throws PizzaException{
-		return null;
-		// TO DO
+		switch(pizzaCode){
+		case("PZM") :
+			return new MargheritaPizza(quantity, orderTime, deliveryTime);
+		case ("PZV") :
+			return new VegetarianPizza(quantity, orderTime, deliveryTime);
+		case ("PZL") :
+			return new MeatLoversPizza(quantity, orderTime, deliveryTime);
+		default :
+			throw new PizzaException();
+		}
 	}
 
 }

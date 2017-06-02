@@ -22,7 +22,7 @@ public class PizzaFactoryTests {
 	
 	@Test
 	public void PizzaFactoryTest() throws PizzaException{
-		Pizza testpizza = PizzaFactory.getPizza("PZM", 2, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
+		Pizza testpizza = PizzaFactory.getPizza("PZM", 2, LocalTime.of(20, 00, 00), LocalTime.of(20, 20, 00));
 		
 		
 	}

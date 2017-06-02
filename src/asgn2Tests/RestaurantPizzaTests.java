@@ -38,8 +38,8 @@ public class RestaurantPizzaTests {
 		customerstest = new ArrayList<Customer>();
 		pizzastest = new ArrayList<Pizza>();
 		
-		pizza = new MeatLoversPizza(5, LocalTime.of(10, 10, 00), LocalTime.of(10, 20, 00));
-		pizza2 = new MeatLoversPizza(5, LocalTime.of(10, 00, 00), LocalTime.of(10, 10, 00));
+		pizza = new MeatLoversPizza(5, LocalTime.of(20, 10, 00), LocalTime.of(20, 10, 00));
+		pizza2 = new MeatLoversPizza(5, LocalTime.of(20, 10, 00), LocalTime.of(20, 10, 00));
 		
 		pizzastest.add(pizza);
 		pizzastest.add(pizza2);

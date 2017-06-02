@@ -20,7 +20,7 @@ import asgn2Restaurant.*;
  *  Any exceptions raised by one of the methods called by this class should be passed to asgn2GUIs.PizzaGUI so that it can be shown to
  *  the user.
  * 
- * @author Person A and Person B
+ * @author n9740457 and Person B
  *
  */
 public class PizzaRestaurant {
@@ -48,7 +48,7 @@ public class PizzaRestaurant {
 	 * The other classes that the method interacts with are listed in Section 11 of the specification document. 
      *
      * <P> PRE: TRUE
-     * <P>POST: If no exception is thrown then the customers and pizzas fields are populated with the details in the log file ordered as they appear in teh log file.
+     * <P>POST: If no exception is thrown then the customers and pizzas fields are populated with the details in the log file ordered as they appear in the log file.
      * <P>      If an exception is thrown then the customers and pizzas fields should be empty.
      * 
 	 * @param filename The log's filename
@@ -61,7 +61,7 @@ public class PizzaRestaurant {
 	public boolean processLog(String filename) throws CustomerException, PizzaException, LogHandlerException{
 		try {
 			customers = LogHandler.populateCustomerDataset(filename);
-			//pizzas = LogHandler.populatePizzaDataset(filename);
+			pizzas = LogHandler.populatePizzaDataset(filename);
 			return true;
 		}catch(Exception e){
 			return false;
