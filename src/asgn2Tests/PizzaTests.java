@@ -23,9 +23,9 @@ public class PizzaTests {
 	@Test (expected  = PizzaException.class)
 	public void PizzaExceptionTest1() throws PizzaException {
 		Pizza meatexceptiontest = new asgn2Pizzas.MeatLoversPizza(100, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));
-		
+
 	}
-	
+
 	@Test (expected  = PizzaException.class)
 	public void PizzaExceptionTest2() throws PizzaException {
 		Pizza meatexceptiontest = new asgn2Pizzas.MeatLoversPizza(10000, LocalTime.of(10, 00, 00), LocalTime.of(10, 20, 00));

@@ -133,7 +133,13 @@ public class PizzaRestaurant {
 	 * @return the total profit for all of the Pizza objects in the pizzas field.
 	 */	
 	public double getTotalProfit(){
-		// TO DO
+		double totalProfit = 0;
+		
+		for (Pizza pizza: pizzas){
+			totalProfit += pizza.getOrderProfit();
+		}
+		
+		return totalProfit;
 	}
 	
 	/**

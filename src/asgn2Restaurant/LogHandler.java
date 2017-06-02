@@ -4,6 +4,7 @@ package asgn2Restaurant;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,7 +13,10 @@ import asgn2Customers.Customer;
 import asgn2Exceptions.CustomerException;
 import asgn2Exceptions.LogHandlerException;
 import asgn2Exceptions.PizzaException;
+import asgn2Pizzas.MargheritaPizza;
+import asgn2Pizzas.MeatLoversPizza;
 import asgn2Pizzas.Pizza;
+import asgn2Pizzas.VegetarianPizza;
 
 /**
  *
@@ -66,7 +70,23 @@ public class LogHandler {
 	 * 
 	 */
 	public static ArrayList<Pizza> populatePizzaDataset(String filename) throws PizzaException, LogHandlerException{
-		// TO DO
+		ArrayList<Pizza> Pizzas = new ArrayList<Pizza>();
+		
+		  try
+		  {
+		    BufferedReader reader = new BufferedReader(new FileReader(filename));
+		    String line;
+		    while ((line = reader.readLine()) != null){
+		    	
+		    	Pizzas.add(createPizza(line));
+		    	
+		    reader.close();
+		    }
+		  }catch(IOException e) {
+			 throw new LogHandlerException();
+			  
+		  }
+		  return (ArrayList<Pizza>) Pizzas;
 	}		
 
 	
@@ -189,8 +209,56 @@ public class LogHandler {
 	 */
 	public static Pizza createPizza(String line) throws PizzaException, LogHandlerException{
 		
-		// TO DO	
+		ArrayList<String> splitLines = new ArrayList<String>();	
 		
+		splitLines = (ArrayList<String>) Arrays.asList(line.split(","));
+		
+		LocalTime orderTime =  LocalTime.parse(splitLines.get(0));
+		LocalTime deliveryTime = LocalTime.parse(splitLines.get(1));
+		String pizzaCode = splitLines.get(7);
+		int quantity = Integer.parseInt(splitLines.get(8));
+		
+	
+		String Pizza1 = "Margherita";
+		String Pizza2 = "Vegetarian";
+		String Pizza3 = "Meat Lovers";
+		int maxQuantity = 10;
+		int minQuantity = 1;
+		int minLocalTimeHour = 19;
+		int maxLocalTimeHour = 23;
+		
+		if((orderTime.getHour() < maxLocalTimeHour) && (orderTime.getHour() > minLocalTimeHour)){
+			
+			if((quantity <= minQuantity) && (quantity >= maxQuantity)){
+				
+				if((pizzaCode.equals(Pizza1)) || (pizzaCode.equals(Pizza2)) || (pizzaCode.equals(Pizza3))){
+					
+					if((pizzaCode.equals(Pizza1))){
+						MargheritaPizza newPizza = new MargheritaPizza(quantity, orderTime, deliveryTime);
+						return newPizza;
+					} else if((pizzaCode.equals(Pizza2))){
+						VegetarianPizza newPizza = new VegetarianPizza(quantity, orderTime, deliveryTime);
+						return newPizza;
+					} else if((pizzaCode.equals(Pizza3))){
+						MeatLoversPizza newPizza = new MeatLoversPizza(quantity, orderTime, deliveryTime);
+						return newPizza;
+					}
+					
+				} else {
+					throw new PizzaException("No such Pizza exists");
+				}
+				
+			} else {
+				throw new PizzaException("You must ");
+			}
+			
+			
+		} else {
+			throw new PizzaException("We are unable to deliver at this time. Try Between 7:00pm - 11:00pm");
+		}
+		
+		
+		return null;
 	}
 
 }
