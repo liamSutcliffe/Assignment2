@@ -62,6 +62,8 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	JTable pizzaInfo;
 	List<String[]> customerData =  new ArrayList<String[]>();
 	List<String[]> pizzaData =  new ArrayList<String[]>();
+	JTextArea jTextAreaPizza = new JTextArea();
+	JTextArea jTextAreaCustomer = new JTextArea();
 	
 	
 	/**
@@ -74,12 +76,14 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 		
 		super(title);
 		
+		jTextAreaCustomer.setVisible(false);
+    	jTextAreaPizza.setVisible(false);
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// create boarders
         JPanel contentPane = new JPanel();
-        contentPane.setLayout(new FlowLayout(FlowLayout.LEFT, 200, 200));
+        contentPane.setLayout(new FlowLayout(FlowLayout.LEFT, 200, 300));
         contentPane.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 2));
 
         // Left container
@@ -157,6 +161,31 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 						
 					    pizzaData.add(customer, currentPizzaData);
 						
+					    for(String[] pizza: pizzaData) {  		         		
+		            		StringBuilder pizzaText = new StringBuilder();
+		            		for (int i = 0; i < pizza.length; i++) {
+		            			pizzaText.append(pizza[i]);
+		            		  if (i != pizza.length - 1) {
+		            			  pizzaText.append(",");
+		            		  }
+		            		}
+		            		
+		            		
+		            		jTextAreaPizza.append(pizzaText.toString()+"\n");
+		            	}
+		        		
+		            	for(String[] customers: customerData) {  		         		
+		            		StringBuilder customerText = new StringBuilder();
+		            		for (int i = 0; i < customers.length; i++) {
+		            			customerText.append(customers[i]);
+		            		  if (i != customers.length - 1) {
+		            			  customerText.append(",");
+		            		  }
+		            		}
+		            		
+		            		jTextAreaCustomer.append(customerText.toString()+"\n");
+		            	}
+					    
 					}
 					
 				} else if(returnVal==JFileChooser.CANCEL_OPTION) {
@@ -180,8 +209,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
        
         dataButton = new JButton("Display Data");
 		
-		JTextArea jTextAreaPizza = new JTextArea();
-		JTextArea jTextAreaCustomer = new JTextArea();
+		
 		
 		// adding the column names
 		
@@ -211,29 +239,10 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
         {
             public void actionPerformed(ActionEvent ae)
             {           	
-            	for(String[] pizza: pizzaData) {  		         		
-            		StringBuilder pizzaText = new StringBuilder();
-            		for (int i = 0; i < pizza.length; i++) {
-            			pizzaText.append(pizza[i]);
-            		  if (i != pizza.length - 1) {
-            			  pizzaText.append(",");
-            		  }
-            		}
-            		
-            		jTextAreaPizza.append(pizzaText.toString()+"\n");
-            	}
-        		
-            	for(String[] customer: customerData) {  		         		
-            		StringBuilder customerText = new StringBuilder();
-            		for (int i = 0; i < customer.length; i++) {
-            			customerText.append(customer[i]);
-            		  if (i != customer.length - 1) {
-            			  customerText.append(",");
-            		  }
-            		}
-            		
-            		jTextAreaCustomer.append(customerText.toString()+"\n");
-            	}
+            	
+            	jTextAreaCustomer.setVisible(true);
+            	jTextAreaPizza.setVisible(true);
+            	
             }
         });
         
@@ -247,7 +256,11 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
             {           	
             	jTextAreaCustomer.setText("");
             	jTextAreaPizza.setText("");
-            	restaurant.resetDetails();  	
+            	restaurant.resetDetails();
+            	jTextAreaPizza = new JTextArea();
+            	jTextAreaCustomer = new JTextArea();
+            	
+            	
             }
         });
        
@@ -260,7 +273,7 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
         // Display GUI
         setContentPane(contentPane);
         pack();
-        setLocationRelativeTo(null);
+        
         setVisible(true);
 	}
 
