@@ -20,7 +20,11 @@ import asgn2Restaurant.*;
  *  Any exceptions raised by one of the methods called by this class should be passed to asgn2GUIs.PizzaGUI so that it can be shown to
  *  the user.
  * 
+<<<<<<< HEAD
  * @author n9740457 and Person B
+=======
+ * @author Person A and Liam Doyle N9499466
+>>>>>>> refs/remotes/origin/master
  *
  */
 public class PizzaRestaurant {

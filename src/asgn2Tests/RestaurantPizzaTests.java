@@ -20,7 +20,7 @@ import asgn2Exceptions.PizzaException;
  * A class that tests the methods relating to the handling of Pizza objects in the asgn2Restaurant.PizzaRestaurant class as well as
  * processLog and resetDetails.
  * 
- * @author Person B
+ * @author Liam Doyle N9499466
  *
  */
 public class RestaurantPizzaTests {
