@@ -37,7 +37,7 @@ import javax.swing.*;
  * You can also use this class and asgn2Wizards.PizzaWizard to test your system as a whole
  * 
  * 
- * @author n9740457 and Person B
+ * @author n9740457 and n9499466
  *
  */
 public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionListener {
@@ -48,7 +48,11 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
 	JLabel label;
 	JButton dataButton;
 	JButton resetButton;
+	JButton totalProfitButton;
+	JButton totalDistanceButton;
 	String filename;
+	JLabel profitLabel;
+	JLabel distanceLabel;
 	JLabel exceptionLabel;
 	File file;
 	String[] customerColumnNames = {"Customer Name", "Mobile Number", "Type", "X Location", "Y Location", "Delivery Distance\n"};
@@ -264,9 +268,22 @@ public class PizzaGUI extends javax.swing.JFrame implements Runnable, ActionList
             }
         });
        
+        totalProfitButton = new JButton("Total Profit");
+        
+        totalProfitButton.addActionListener(new ActionListener()
+        {
+            public void actionPerformed(ActionEvent ae)
+            {           	
+            	
+            	profitLabel.setText(doubleFormat.format(restaurant.getTotalProfit()));
+            	
+            }
+        });
+        
         
         contentPane.add(dataButton);    
-        contentPane.add(resetButton); 
+        contentPane.add(resetButton);
+        
         contentPane.add(jTextAreaPizza);
         contentPane.add(jTextAreaCustomer);
 

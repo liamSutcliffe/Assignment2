@@ -64,5 +64,5 @@ public class PizzaTests {
 		assertEquals("PZV", vegtest.getPizzaType());
 	}
 	
-	// TO DO
+	
 }

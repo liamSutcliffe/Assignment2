@@ -21,10 +21,8 @@ import asgn2Restaurant.*;
  *  the user.
  * 
 <<<<<<< HEAD
- * @author n9740457 and Person B
-=======
- * @author Person A and Liam Doyle N9499466
->>>>>>> refs/remotes/origin/master
+ * @author n9740457 and Liam Doyle N9499466
+
  *
  */
 public class PizzaRestaurant {
